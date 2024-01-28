@@ -1,10 +1,14 @@
 import {useState} from 'react'
 
-function WaterContainer() {
+type WaterContainerProps = {
+	containerNo: number
+}
+
+function WaterContainer({containerNo}: WaterContainerProps) {
 	const [waterLevel, setWaterLevel] = useState(0)
 
 	function handleAdd() {
-		if (waterLevel > 5) return
+		if (waterLevel >= 5) return
 
 		setTimeout(() => {
 			setWaterLevel(waterLevel + 1)
@@ -31,7 +35,7 @@ function WaterContainer() {
 				<div
 					className={`w-full h-${
 						waterLevel < 5 ? `${waterLevel}/5` : `full`
-					} bg-sky-500 rounded-t-md rounded-b-sm absolute bottom-0 border-sky-600  ${
+					} bg-sky-500 rounded-t-md rounded-b-sm absolute bottom-0 border-sky-600 ${
 						waterLevel > 0 ? 'border-4' : ''
 					}`}
 				></div>
