@@ -1,30 +1,10 @@
-# React + TypeScript + Vite
+# React Challenge -
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Built with:
 
-Currently, two official plugins are available:
+-   Vite + React Typescript Starter
+-   Tailwind for Styling
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<br  />
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+<blockquote class="twitter-tweet" data-media-max-width="560"><p lang="en" dir="ltr">Question for <a href="https://twitter.com/hashtag/React?src=hash&amp;ref_src=twsrc%5Etfw">#React</a> space: <a href="https://t.co/8WctlE2Ior">https://t.co/8WctlE2Ior</a> <a href="https://t.co/ioh0Iam9om">pic.twitter.com/ioh0Iam9om</a></p>&mdash; Ankush Dharkar (@ankushdharkar) <a href="https://twitter.com/ankushdharkar/status/1751636322479997352?ref_src=twsrc%5Etfw">January 28, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
