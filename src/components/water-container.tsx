@@ -18,16 +18,8 @@ function WaterContainer({containerNo}: WaterContainerProps) {
 
 	function handleEmpty() {
 		dispatch({
-			type: CONSTANTS.TIMEOUT,
-			timeoutCompleted: false,
-		})
-		dispatch({
 			type: CONSTANTS.EMPTY,
 			containerNo,
-		})
-		dispatch({
-			type: CONSTANTS.TIMEOUT,
-			timeoutCompleted: true,
 		})
 	}
 
