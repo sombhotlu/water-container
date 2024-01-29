@@ -1,12 +1,32 @@
 import {createContext, useContext, useReducer} from 'react'
 
+export const CONSTANTS = {
+	INCREMENT: 'INCREMENT',
+	EMPTY: 'EMPTY',
+	REBALANCE: 'REBALANCE',
+} as const
+
 type GlobalState = {
 	containerCount: number
+	[container: number]: number
 }
 
-type Action = {
-	type: 'increment'
-}
+type Action =
+	| {
+			type: (typeof CONSTANTS)['INCREMENT']
+			containerNo: number
+	  }
+	| {
+			type: (typeof CONSTANTS)['EMPTY']
+			containerNo: number
+	  }
+	| {
+			type: (typeof CONSTANTS)['REBALANCE']
+			buckets: {
+				containerNo: number
+				quantity: number
+			}[]
+	  }
 
 const GlobalContext = createContext<
 	{state: GlobalState; dispatch: React.Dispatch<Action>} | undefined
@@ -14,29 +34,53 @@ const GlobalContext = createContext<
 
 function globalStateReducer(state: GlobalState, action: Action) {
 	switch (action.type) {
-		case 'increment':
-			return state
+		case CONSTANTS.INCREMENT: {
+			if (state[action.containerNo] === 1000) return state
+			return {
+				...state,
+				[action.containerNo]: state[action.containerNo] + 200,
+			}
+		}
+		case CONSTANTS.EMPTY: {
+			return {
+				...state,
+				[action.containerNo]: 0,
+			}
+		}
+		case CONSTANTS.REBALANCE: {
+			const originalState = state
+			const values: Record<number, number> = {}
+			for (const bucket of action.buckets) {
+				values[bucket.containerNo] = bucket.quantity
+			}
+			return {
+				...originalState,
+				...values,
+			}
+		}
 		default: {
 			throw new Error(`Unhandled action type: ${action.type}`)
 		}
 	}
 }
 
-function GlobalStateProvider({children}: {children: React.ReactNode}) {
-	const [state, dispatch] = useReducer(globalStateReducer, {
+export function GlobalStateProvider({children}: {children: React.ReactNode}) {
+	const initialState: GlobalState = {
 		containerCount: 4,
-	})
+	}
+
+	for (let i = 1; i <= initialState.containerCount; i++) initialState[i] = 0
+
+	const [state, dispatch] = useReducer(globalStateReducer, initialState)
 
 	const value = {state, dispatch}
 
 	return <GlobalContext.Provider value={value}>{children}</GlobalContext.Provider>
 }
 
-function useGlobalContext() {
+export function useGlobalContext() {
 	const context = useContext(GlobalContext)
 	if (context === undefined)
 		throw new Error('useGlobalContext must be used within a GlobalContextProvider')
 	return context
 }
-
-export {GlobalStateProvider, useGlobalContext}

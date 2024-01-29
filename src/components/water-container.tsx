@@ -1,22 +1,26 @@
-import {useState} from 'react'
+import {useGlobalContext, CONSTANTS} from '../global-context'
 
 type WaterContainerProps = {
 	containerNo: number
 }
 
 function WaterContainer({containerNo}: WaterContainerProps) {
-	const [waterLevel, setWaterLevel] = useState(0)
+	const {state, dispatch} = useGlobalContext()
 
 	function handleAdd() {
-		if (waterLevel >= 5) return
-
 		setTimeout(() => {
-			setWaterLevel(waterLevel + 1)
-		}, 1000)
+			dispatch({
+				type: CONSTANTS.INCREMENT,
+				containerNo,
+			})
+		}, 500)
 	}
 
 	function handleEmpty() {
-		setWaterLevel(0)
+		dispatch({
+			type: CONSTANTS.EMPTY,
+			containerNo,
+		})
 	}
 
 	return (
@@ -33,11 +37,12 @@ function WaterContainer({containerNo}: WaterContainerProps) {
 
 			<div className="mt-8 w-28 h-32 border-4 border-gray-500 rounded-lg relative border-opacity-80">
 				<div
-					className={`w-full h-${
-						waterLevel < 5 ? `${waterLevel}/5` : `full`
-					} bg-sky-500 rounded-t-md rounded-b-sm absolute bottom-0 border-sky-600 ${
-						waterLevel > 0 ? 'border-4' : ''
+					className={`w-full bg-sky-500 rounded-t-md rounded-b-sm absolute bottom-0 border-sky-600 ${
+						state[containerNo] > 0 ? 'border-4' : ''
 					}`}
+					style={{
+						height: `${state[containerNo] / 10}%`,
+					}}
 				></div>
 			</div>
 		</div>
