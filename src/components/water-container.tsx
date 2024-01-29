@@ -13,7 +13,7 @@ function WaterContainer({containerNo}: WaterContainerProps) {
 			type: CONSTANTS.TIMEOUT,
 			timeoutCompleted: false,
 		})
-		await delay(500)
+		await delay(1000)
 		dispatch({
 			type: CONSTANTS.INCREMENT,
 			containerNo,

@@ -1,8 +1,7 @@
 import {useEffect, useMemo} from 'react'
 import './App.scss'
 import {WaterContainer} from './components/water-container'
-import {useGlobalContext} from './global-context'
-import {delay} from './utils'
+import {CONSTANTS, useGlobalContext} from './global-context'
 
 function App() {
 	const {state, dispatch} = useGlobalContext()
@@ -13,6 +12,7 @@ function App() {
 	)
 
 	const containerQuantities = containers.map((_, index) => state[index + 1])
+	// console.log(containerQuantities, state.buffer)
 
 	useEffect(() => {
 		if (!state.timeoutCompleted) return
@@ -59,16 +59,15 @@ function App() {
 				return bucket
 			})
 
-		const runTimeouts = async () => {
-			await delay(500)
+		const rebalanceTimeout = setTimeout(() => {
 			dispatch({
-				type: 'REBALANCE',
+				type: CONSTANTS.REBALANCE,
 				buckets: desceningOrderedQuantities,
 				buffer: rebalanceQuantity >= 1 ? rebalanceQuantity : 0,
 			})
-		}
+		}, 1000)
 
-		runTimeouts()
+		return () => clearTimeout(rebalanceTimeout)
 	}, [...containerQuantities, state.timeoutCompleted])
 
 	const content = containers.map((_, index) => (
