@@ -46,8 +46,14 @@ function App() {
 						25,
 					)
 
-					rebalanceQuantity -= additionToCurrentBucket
-					bucket.quantity += additionToCurrentBucket
+					if (bucket.quantity + additionToCurrentBucket > 1000) {
+						const subsetOfAdditionToCurrentBucket = 1000 - bucket.quantity
+						bucket.quantity += subsetOfAdditionToCurrentBucket
+						rebalanceQuantity -= subsetOfAdditionToCurrentBucket
+					} else {
+						bucket.quantity += additionToCurrentBucket
+						rebalanceQuantity -= additionToCurrentBucket
+					}
 				}
 
 				return bucket

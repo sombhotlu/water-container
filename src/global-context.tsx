@@ -44,9 +44,17 @@ function globalStateReducer(state: GlobalState, action: Action) {
 	switch (action.type) {
 		case CONSTANTS.INCREMENT: {
 			if (state[action.containerNo] === 1000) return state
+			let quantityToFill = 200,
+				buffer = state.buffer
+			if (state[action.containerNo] + quantityToFill > 1000) {
+				quantityToFill = 1000 - state[action.containerNo]
+				buffer = 200 - quantityToFill
+			}
+
 			return {
 				...state,
-				[action.containerNo]: state[action.containerNo] + 200,
+				[action.containerNo]: state[action.containerNo] + quantityToFill,
+				buffer,
 			}
 		}
 		case CONSTANTS.EMPTY: {
