@@ -9,17 +9,33 @@ function WaterContainer({containerNo}: WaterContainerProps) {
 	const {state, dispatch} = useGlobalContext()
 
 	async function handleAdd() {
-		await delay(1000)
+		dispatch({
+			type: CONSTANTS.TIMEOUT,
+			timeoutCompleted: false,
+		})
+		await delay(500)
 		dispatch({
 			type: CONSTANTS.INCREMENT,
 			containerNo,
+		})
+		dispatch({
+			type: CONSTANTS.TIMEOUT,
+			timeoutCompleted: true,
 		})
 	}
 
 	function handleEmpty() {
 		dispatch({
+			type: CONSTANTS.TIMEOUT,
+			timeoutCompleted: false,
+		})
+		dispatch({
 			type: CONSTANTS.EMPTY,
 			containerNo,
+		})
+		dispatch({
+			type: CONSTANTS.TIMEOUT,
+			timeoutCompleted: true,
 		})
 	}
 

@@ -13,9 +13,10 @@ function App() {
 	)
 
 	const containerQuantities = containers.map((_, index) => state[index + 1])
-	console.log(containerQuantities, state.buffer)
 
 	useEffect(() => {
+		if (!state.timeoutCompleted) return
+
 		const allEqual = containerQuantities.every((val) => val === containerQuantities[0])
 		if (allEqual) return
 
@@ -38,7 +39,6 @@ function App() {
 					rebalanceQuantity += quantityItCanMinimise
 				} else if (bucket.quantity < averageQuantity) {
 					const remainingBuckets = containerQuantities.length - index
-					// console.log('reaminaing buckets', remainingBuckets)
 					const additionPerBucket = rebalanceQuantity / remainingBuckets
 					const additionToCurrentBucket = Math.min(
 						additionPerBucket,
@@ -46,7 +46,6 @@ function App() {
 						25,
 					)
 
-					// console.log('additionPerBucket', additionPerBucket, additionToCurrentBucket)
 					rebalanceQuantity -= additionToCurrentBucket
 					bucket.quantity += additionToCurrentBucket
 				}
@@ -55,7 +54,7 @@ function App() {
 			})
 
 		const runTimeouts = async () => {
-			await delay(1500)
+			await delay(500)
 			dispatch({
 				type: 'REBALANCE',
 				buckets: desceningOrderedQuantities,
@@ -64,7 +63,7 @@ function App() {
 		}
 
 		runTimeouts()
-	}, [...containerQuantities])
+	}, [...containerQuantities, state.timeoutCompleted])
 
 	const content = containers.map((_, index) => (
 		<WaterContainer key={index + 1} containerNo={index + 1} />

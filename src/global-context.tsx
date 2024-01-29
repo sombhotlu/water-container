@@ -4,12 +4,14 @@ export const CONSTANTS = {
 	INCREMENT: 'INCREMENT',
 	EMPTY: 'EMPTY',
 	REBALANCE: 'REBALANCE',
+	TIMEOUT: 'TIMEOUT',
 } as const
 
 type GlobalState = {
 	containerCount: number
 	[container: number]: number
 	buffer: number
+	timeoutCompleted: boolean
 }
 
 type Action =
@@ -28,6 +30,10 @@ type Action =
 				quantity: number
 			}[]
 			buffer: number
+	  }
+	| {
+			type: (typeof CONSTANTS)['TIMEOUT']
+			timeoutCompleted: boolean
 	  }
 
 const GlobalContext = createContext<
@@ -61,6 +67,13 @@ function globalStateReducer(state: GlobalState, action: Action) {
 				buffer: action.buffer,
 			}
 		}
+
+		case CONSTANTS.TIMEOUT: {
+			return {
+				...state,
+				timeoutCompleted: action.timeoutCompleted,
+			}
+		}
 		default: {
 			throw new Error(`Unhandled action type: ${action.type}`)
 		}
@@ -71,6 +84,7 @@ export function GlobalStateProvider({children}: {children: React.ReactNode}) {
 	const initialState: GlobalState = {
 		containerCount: 4,
 		buffer: 0,
+		timeoutCompleted: true,
 	}
 
 	for (let i = 1; i <= initialState.containerCount; i++) initialState[i] = 0
