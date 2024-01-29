@@ -9,6 +9,7 @@ export const CONSTANTS = {
 type GlobalState = {
 	containerCount: number
 	[container: number]: number
+	buffer: number
 }
 
 type Action =
@@ -26,6 +27,7 @@ type Action =
 				containerNo: number
 				quantity: number
 			}[]
+			buffer: number
 	  }
 
 const GlobalContext = createContext<
@@ -56,6 +58,7 @@ function globalStateReducer(state: GlobalState, action: Action) {
 			return {
 				...originalState,
 				...values,
+				buffer: action.buffer,
 			}
 		}
 		default: {
@@ -67,6 +70,7 @@ function globalStateReducer(state: GlobalState, action: Action) {
 export function GlobalStateProvider({children}: {children: React.ReactNode}) {
 	const initialState: GlobalState = {
 		containerCount: 4,
+		buffer: 0,
 	}
 
 	for (let i = 1; i <= initialState.containerCount; i++) initialState[i] = 0

@@ -13,7 +13,7 @@ function WaterContainer({containerNo}: WaterContainerProps) {
 				type: CONSTANTS.INCREMENT,
 				containerNo,
 			})
-		}, 500)
+		}, 1000)
 	}
 
 	function handleEmpty() {

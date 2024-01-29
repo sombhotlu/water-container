@@ -13,23 +13,18 @@ function App() {
 
 	const containerQuantities = containers.map((_, index) => state[index + 1])
 
-	console.log(containerQuantities)
+	console.log(containerQuantities, state.buffer)
 
 	useEffect(() => {
-		/* 
-			find the average
-			calculate how much one can 
-		
-		*/
-
 		const allEqual = containerQuantities.every((val) => val === containerQuantities[0])
 
 		if (!allEqual) {
-			const averageQuantity =
-				containerQuantities.reduce((acc, quantity) => acc + quantity) /
-				containerQuantities.length
+			let rebalanceQuantity = state.buffer
 
-			let rebalanceQuantity = 0
+			const averageQuantity =
+				(containerQuantities.reduce((acc, quantity) => acc + quantity) +
+					rebalanceQuantity) /
+				containerQuantities.length
 
 			const desceningOrderedQuantities = containers
 				.map((_, index) => ({
@@ -70,10 +65,11 @@ function App() {
 				dispatch({
 					type: 'REBALANCE',
 					buckets: desceningOrderedQuantities,
+					buffer: rebalanceQuantity >= 1 ? rebalanceQuantity : 0,
 				})
-			}, 1500)
+			}, 1000)
 		}
-	}, containerQuantities)
+	}, [...containerQuantities, state.buffer])
 
 	const content = containers.map((_, index) => (
 		<WaterContainer key={index + 1} containerNo={index + 1} />
