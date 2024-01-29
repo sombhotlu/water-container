@@ -1,4 +1,5 @@
 import {useGlobalContext, CONSTANTS} from '../global-context'
+import {delay} from '../utils'
 
 type WaterContainerProps = {
 	containerNo: number
@@ -7,13 +8,12 @@ type WaterContainerProps = {
 function WaterContainer({containerNo}: WaterContainerProps) {
 	const {state, dispatch} = useGlobalContext()
 
-	function handleAdd() {
-		setTimeout(() => {
-			dispatch({
-				type: CONSTANTS.INCREMENT,
-				containerNo,
-			})
-		}, 1000)
+	async function handleAdd() {
+		await delay(1000)
+		dispatch({
+			type: CONSTANTS.INCREMENT,
+			containerNo,
+		})
 	}
 
 	function handleEmpty() {
