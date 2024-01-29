@@ -4,7 +4,6 @@ export const CONSTANTS = {
 	INCREMENT: 'INCREMENT',
 	EMPTY: 'EMPTY',
 	REBALANCE: 'REBALANCE',
-	TIMEOUT: 'TIMEOUT',
 } as const
 
 type GlobalState = {
@@ -30,10 +29,6 @@ type Action =
 				quantity: number
 			}[]
 			buffer: number
-	  }
-	| {
-			type: (typeof CONSTANTS)['TIMEOUT']
-			timeoutCompleted: boolean
 	  }
 
 const GlobalContext = createContext<
@@ -76,12 +71,6 @@ function globalStateReducer(state: GlobalState, action: Action) {
 			}
 		}
 
-		case CONSTANTS.TIMEOUT: {
-			return {
-				...state,
-				timeoutCompleted: action.timeoutCompleted,
-			}
-		}
 		default: {
 			throw new Error(`Unhandled action type: ${action.type}`)
 		}

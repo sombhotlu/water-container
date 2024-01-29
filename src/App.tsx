@@ -15,8 +15,6 @@ function App() {
 	// console.log(containerQuantities, state.buffer)
 
 	useEffect(() => {
-		if (!state.timeoutCompleted) return
-
 		const allEqual = containerQuantities.every((val) => val === containerQuantities[0])
 		if (allEqual) return
 
@@ -68,7 +66,7 @@ function App() {
 		}, 1000)
 
 		return () => clearTimeout(rebalanceTimeout)
-	}, [...containerQuantities, state.timeoutCompleted])
+	}, [...containerQuantities])
 
 	const content = containers.map((_, index) => (
 		<WaterContainer key={index + 1} containerNo={index + 1} />
