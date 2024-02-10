@@ -9,7 +9,6 @@ function WaterContainer({containerNo}: WaterContainerProps) {
 	const {state, dispatch} = useGlobalContext()
 
 	async function handleAdd() {
-		await delay(1000)
 		dispatch({
 			type: CONSTANTS.INCREMENT,
 			containerNo,
@@ -37,7 +36,7 @@ function WaterContainer({containerNo}: WaterContainerProps) {
 
 			<div className="mt-8 w-28 h-32 border-4 border-gray-500 rounded-lg relative border-opacity-80">
 				<div
-					className={`w-full transition-[height] bg-sky-500 rounded-t-md rounded-b-sm absolute bottom-0 border-sky-600 ${
+					className={`w-full transition-[height] duration-1000 bg-sky-500 rounded-t-md rounded-b-sm absolute bottom-0 border-sky-600 ${
 						state[containerNo] > 0 ? 'border-4' : ''
 					}`}
 					style={{
