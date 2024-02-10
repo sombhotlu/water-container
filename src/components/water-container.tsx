@@ -1,5 +1,4 @@
 import {useGlobalContext, CONSTANTS} from '../global-context'
-import {delay} from '../utils'
 
 type WaterContainerProps = {
 	containerNo: number
