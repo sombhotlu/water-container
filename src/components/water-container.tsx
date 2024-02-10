@@ -43,6 +43,9 @@ function WaterContainer({containerNo}: WaterContainerProps) {
 					}}
 				></div>
 			</div>
+			<div className="mt-8 text-center text-gray-400">
+				{Math.round(state[containerNo])} <span className="italic">lit. </span>{' '}
+			</div>
 		</div>
 	)
 }
